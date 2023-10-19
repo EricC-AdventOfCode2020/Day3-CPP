@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include <utility.h>
+#include "utility.h"
 
 using namespace std;
 
@@ -18,7 +18,16 @@ int main()
 
 int part_1(const vector<string> data)
 {
+    int count = 0;
 
+    for (int i = 0, right = 0; i < data.size(); i++, right = (right + 3) % data[i].length())
+    {
+        if (data[i][right] == '#')
+        {
+            count++;
+        }
+    }
+    return count;
 }
 long part_2(const vector<string> data)
 {

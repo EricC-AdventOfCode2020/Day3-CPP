@@ -7,6 +7,7 @@ using namespace std;
 
 int part_1(const vector<string> data);
 long part_2(vector<string> data);
+int go_down_slope(vector<string> data, int down, int right);
 
 int main()
 {
@@ -16,81 +17,43 @@ int main()
     cout << "Part 2: " << part_2(data) << endl;
 }
 
-int part_1(const vector<string> data)
+int go_down_slope(const vector<string> data, int down, int rightMove)
 {
     int count = 0;
 
-    for (int i = 0, right = 0; i < data.size(); i++, right = (right + 3) % data[i].length())
+    for (int i = 0, right = 0; i < data.size(); i = i + down, right = (right + rightMove) % data[i].length())
     {
         if (data[i][right] == '#')
-        {
             count++;
-        }
     }
+
     return count;
 }
+
+int part_1(const vector<string> data)
+{
+    int count = go_down_slope(data, 1, 3);
+    return count;
+}
+
+// infinite loop when calling this???
 long part_2(vector<string> data)
 {
     long sum = 1;
-    long count = 0;
-
-    // y = x
-    for (int i = 0, right = 0; i < data.size(); i++, right = (right + 1) % data[i].length())
-    {
-        if (data[i][right] == '#')
-        {
-            count++;
-        }
-    }
+    int count = go_down_slope(data, 1, 1);
 
     sum *= count;
-    count = 0;
 
-    // y = x / 3
-    for (int i = 0, right = 0; i < data.size(); i++, right = (right + 3) % data[i].length())
-    {
-        if (data[i][right] == '#')
-        {
-            count++;
-        }
-    }
-
+    count = go_down_slope(data, 1, 3);
     sum *= count;
-    count = 0;
 
-    // y = x / 5
-    for (int i = 0, right = 0; i < data.size(); i++, right = (right + 5) % data[i].length())
-    {
-        if (data[i][right] == '#')
-        {
-            count++;
-        }
-    }
-
+    count = go_down_slope(data, 1, 5);
     sum *= count;
-    count = 0;
 
-    // y = x / 7
-    for (int i = 0, right = 0; i < data.size(); i++, right = (right + 7) % data[i].length())
-    {
-        if (data[i][right] == '#')
-        {
-            count++;
-        }
-    }
-
+    count = go_down_slope(data, 1, 7);
     sum *= count;
-    count = 0;
 
-    // y = 2x
-    for (int i = 0, right = 0; i < data.size(); i *= 2, right = (right + 1) % data[i].length())
-    {
-        if (data[i][right] == '#')
-        {
-            count++;
-        }
-    }
-
+    count = go_down_slope(data, 2, 1);
     sum *= count;
 
     return sum;
